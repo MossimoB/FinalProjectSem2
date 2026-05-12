@@ -9,8 +9,12 @@ public abstract class Item {
     protected String title;
     protected String status;
 
+    private static int nextId = 1;
+
     public Item(int id, String title, String status) {
-        this.id = String.format("%04d, ");
+        // getting error saying that nextId should be string
+        // or wrap this.id in parseInt
+        this.id = String.format("%04d", nextId++);
         this.title = title;
         this.status = status;
     }
