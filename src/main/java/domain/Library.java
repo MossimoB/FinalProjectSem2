@@ -1,8 +1,12 @@
 package domain;
 
+import lombok.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class Library {
     private List<Item> items;
     private List<User> users;

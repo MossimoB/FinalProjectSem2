@@ -12,11 +12,11 @@ public abstract class User {
     protected String name;
     protected List<Item> borrowedItems;
 
-    public User(int id, String name, List<Item> borrowedItems) {
+    public User(int id, String name) {
         this.id = id;
         this.name = name;
         borrowedItems = new ArrayList<>();
     }
 
-    public abstract int getBorrowLimits();
+    public abstract int getBorrowLimit();
 }
