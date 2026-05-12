@@ -1,6 +1,6 @@
 package interfaces;
 
-public class Reportable {
+public interface Reportable {
 
     void generateReport();
 }
