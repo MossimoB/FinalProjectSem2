@@ -1,4 +1,4 @@
-package org.mossimo;
+package interfaces;
 
 public class Reportable {
 }

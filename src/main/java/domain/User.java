@@ -1,4 +1,4 @@
-package org.mossimo;
+package domain;
 
 public class User {
 }

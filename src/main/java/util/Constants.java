@@ -1,4 +1,4 @@
-package org.mossimo;
+package util;
 
 public class Constants {
 }
