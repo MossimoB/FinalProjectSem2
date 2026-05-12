@@ -1,7 +1,25 @@
 package org.mossimo;
 
-public class Main {
-    static void main() {
+import domain.*;
 
+public class Main {
+    static void main(String[] args) {
+        Library library = new Library(// leave empty?);
+        Student student = new Student(1, "Alice");
+
+        Book book = new Book(
+                1,
+                "Harry Potter1",
+                "in store",
+                "1234567890123",
+                "J.K. Rowling",
+                "Fantasy"
+        );
+
+        library.addUser(student);
+
+        library.addItem(book);
+
+        // try - catch
     }
 }
