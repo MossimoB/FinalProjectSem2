@@ -49,4 +49,25 @@ public class Library {
         item.setStatus("In store");
         user.getBorrowedItems().remove(item);
     }
+
+    public Item recursiveSearch(String title, int index) {
+        if (index >= items.size()) {
+            return null;
+        }
+
+        Item item = items.get(index);
+
+        if (item.getTitle().equalsIgnoreCase(title)) {
+            return item;
+        }
+
+        return recursiveSearch(title, index + 1);
+    }
+
+    public List<Item> streamSearch(String title) {
+        return items.stream()
+                .filter(i -> i.getTitle()
+                .equalsIgnoreCase(title))
+                .toList();
+    }
 }
