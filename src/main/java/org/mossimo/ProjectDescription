@@ -1,0 +1,125 @@
+**Library Management System - Java Project**
+
+## **Project Overview**
+The goal of this project is to develop a **Library Management System** that allows users to borrow, return, and search for library items. The system will utilize **object-oriented programming concepts**, including inheritance, polymorphism, and abstract classes/interfaces. The project will also incorporate **exception handling, file I/O with CSV files, generics, recursion, and Java collections (List, Stack, Queue, Set, and Map)**.
+
+## **Project Requirements**
+### **Core Functionalities:**
+1. **Users Management:**
+   - Two types of users: `Student`, `Teacher`, and `Admin`.
+   - Users have unique IDs, names, and a list of borrowed items.
+   - Borrowing limits: Students can borrow up to **5 books (book only)**, while teachers can borrow up to **10 items** in total.
+
+2. **Library Items Management:**
+   - Three types of items: `Book`, `DVD`, and `Magazine`.
+   - `Book` has attributes: `ISBN`, `title`, `author`, and `genre`.   (search for the ISBN valid pattern for the validation)
+   - `DVD` has attributes: `title`, `director`, `duration (minutes)`.
+   - `Magazine` has attributes: `title`, `issueNumber`, `publisher`.
+   - Each item may have more than one copies, which means you may have 2 books with the same `ISBN`, `title`, `author` and `genre`, but with different `Id` to distinguish them.
+   - Each item has a status to indicate if it is borrowed, in store or lost.
+
+3. **Borrowing and Returning System:**
+   - Users can borrow and return items.
+   - Borrowing should check against user limits.
+   - Implement **exception handling** for invalid operations (e.g., borrowing more than allowed, or all copies are borrowed).
+
+4. **Searching and Reporting:**
+   - Users can search for items by title or author (case-insensitive). If an item has more than one copy, the search result should only contain one copy of them
+   - Implement a **recursive** version search method for finding items.
+   - Implement also a **stream** version search method for finding items.
+   - Admin can generate a report of all borrowed/in-store/lost items (implements an `Reportable` interface).
+
+5. **Data Persistence:**
+   - Load **CSV fiels** to initialize items and users
+   - Admin can call the method to backup current users and items into two **CSV files**.
+
+6. **Sorting:**
+   - Provide different sorting strategies for User and Item
+
+---
+
+## **Project Structure**
+### **Suggested Package Organization:**
+```
+ðŸ“‚ LibraryManagementSystem
+ â”£ ðŸ“‚ src/main/java/com/library
+ â”ƒ â”£ ðŸ“‚ domain
+ â”ƒ â”ƒ â”£ ðŸ“œ Item.java           (Abstract class for library items)
+ â”ƒ â”ƒ â”£ ðŸ“œ Book.java           (Extends Item)
+ â”ƒ â”ƒ â”£ ðŸ“œ DVD.java            (Extends Item)
+ â”ƒ â”ƒ â”£ ðŸ“œ Magazine.java       (Extends Item)
+ â”ƒ â”ƒ â”£ ðŸ“œ User.java           (Abstract class for users)
+ â”ƒ â”ƒ â”£ ðŸ“œ Student.java        (Extends User)
+ â”ƒ â”ƒ â”£ ðŸ“œ Teacher.java        (Extends User)
+ â”ƒ â”ƒ â”£ ðŸ“œ Admin.java          (Extends User)
+ â”ƒ â”ƒ â”£ ðŸ“œ Library.java        (For the Library)
+ â”ƒ â”£ ðŸ“‚ service
+ â”ƒ â”£ ðŸ“‚ util
+ â”ƒ â”ƒ â”£ ðŸ“œ Constants.java      (Holds static constants (Optional))
+ â”ƒ â”£ ðŸ“‚ interfaces
+ â”ƒ â”ƒ â”£ ðŸ“œ Reportable.java     (Interface for reporting functionality)
+ â”ƒ â”£ ðŸ“œ Main.java             (Main class to run the system)
+ â”£ ðŸ“‚ src/main/resources
+ â”ƒ â”£ ðŸ“œ books.csv
+ â”ƒ â”£ ðŸ“œ users.csv
+ â”£ ðŸ“‚ src/test/java/com/library
+ â”ƒ â”— ðŸ“œ DifferentTestClasses
+ â”£ ðŸ“œ pom.xml                 (Maven dependencies)
+ â”— ðŸ“œ README.md
+```
+
+---
+
+## **Deliverables**
+### **Deliverable 1 - Analysis, Planning, and Design**
+- Students present a **class diagram** of the project
+- Student name and ID should also be shown in the class diagram
+
+### **Deliverable 2 - Beta Implementation**
+- Create all **class definitions** with proper structure.
+- Define **method headers**, but method bodies can be empty.
+- Implement part of the methods (50%) with unit testing
+
+### **Deliverable 3 - Complete Implementation**
+- Implement all features with unit testing.
+
+### **Deliverable 4 - Reports**
+- **Final report** summarizing the project.
+- A user guide with screenshot to show the features of the project
+
+---
+
+## **Additional Explanations**
+### **Validation (`Validation.java`)**
+- This class ensures inputs are valid before processing.
+- Students may **choose** to centralize validation here or validate inside constructors/methods.
+- Example validation rules:
+  ```java
+  public static boolean isValidISBN(String isbn) {
+      return isbn.matches("\\d{13}"); // Must be 13 digits
+  }
+  ```
+
+### **Constants (`Constants.java`)**
+- Stores frequently used constants.
+- Example:
+  ```java
+  public class Constants {
+      public static final int MAX_BOOKS_STUDENT = 5;
+      public static final int MAX_ITEMS_TEACHER = 10;
+      public static final String BOOKS_CSV_PATH = "src/main/resources/books.csv";
+      public static final String USERS_CSV_PATH = "src/main/resources/users.csv";
+  }
+  ```
+
+---
+
+### **Final Notes**
+- The project should be built using **Maven**.
+- Students should follow **best coding practices** and write **clear documentation**.
+- Use **JUnit for testing** where applicable.
+- The code must match the class diagram in deliverable 1. If any change of the structure is made, the class diagram should be updated too.
+- A **public** git repo must be created for the project, and updated as the project is developed.
+- Student Should submit a txt file with the link of git repo.
+
+---
