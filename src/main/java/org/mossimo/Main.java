@@ -4,7 +4,7 @@ import domain.*;
 
 public class Main {
     static void main(String[] args) {
-        Library library = new Library(// leave empty?);
+        Library library = new Library();
         Student student = new Student(1, "Alice");
 
         Book book = new Book(
@@ -20,6 +20,6 @@ public class Main {
 
         library.addItem(book);
 
-        // try - catch
+        library.borrowItem(student, book);
     }
 }

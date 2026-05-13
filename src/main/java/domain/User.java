@@ -8,13 +8,16 @@ import java.util.List;
 @Getter
 @Setter
 public abstract class User {
-    protected int id;
+    protected String id;
     protected String name;
     protected List<Item> borrowedItems;
 
+    private static int nextId = 1;
+
     public User(int id, String name) {
-        this.id = id;
+        this.id = String.format("%04d", nextId++);
         this.name = name;
+
         borrowedItems = new ArrayList<>();
     }
 

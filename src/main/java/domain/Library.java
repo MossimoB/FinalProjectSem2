@@ -11,9 +11,9 @@ public class Library {
     private List<Item> items;
     private List<User> users;
 
-    public Library(List<Item> items, List<Item> users) {
-        this.items = new ArrayList<>();
-        this.users = new ArrayList<>();
+    public Library() {
+        items = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     public void addItem(Item item) {
@@ -26,12 +26,10 @@ public class Library {
 
     public void borrowItem(User user, Item item) {
         try {
-            if (item.getStatus().equalsIgnoreCase("Borrowed")) ;
-            {
+            if (item.getStatus().equalsIgnoreCase("Borrowed")) {
                 throw new Exception("Item already borrowed");
             }
 
-            // IntelliJ says statement is unreachable, but I'm not sure why
             if (user.getBorrowedItems().size() >= user.getBorrowLimit()) {
                 throw new Exception("Borrow limit reached");
             }
