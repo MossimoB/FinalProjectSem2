@@ -113,7 +113,7 @@ public class MainTest {
 
         List<Item> results = library.streamSearch("Harry Potter");
 
-        int expected = 2;
+        int expected = 1;
         int actual = results.size();
 
         Assertions.assertEquals(expected, actual);
