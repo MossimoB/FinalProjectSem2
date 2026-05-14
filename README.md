@@ -3,6 +3,7 @@
 ## Library Management System
 
 ### Author: Mossimo Bianco
+### Student ID: 2585451
 
 This project is a Java-based library management system.
 It allows the creation and management of library users, books, magazines, DVDs, and borrowing operations.
