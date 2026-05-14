@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@EqualsAndHashCode
+@ToString
 public class Library {
     private List<Item> items;
     private List<User> users;

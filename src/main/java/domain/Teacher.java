@@ -15,4 +15,9 @@ public class Teacher extends User {
     public int getBorrowLimit() {
         return 10;
     }
+
+    @Override
+    public boolean canBorrow(Item item) {
+        return false;
+    }
 }

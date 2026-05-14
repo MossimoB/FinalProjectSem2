@@ -6,6 +6,8 @@ import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Admin extends User implements Reportable {
     private Library library;
 
@@ -16,6 +18,11 @@ public class Admin extends User implements Reportable {
     @Override
     public int getBorrowLimit() {
         return 0;
+    }
+
+    @Override
+    public boolean canBorrow(Item item) {
+        return false;
     }
 
     @Override
