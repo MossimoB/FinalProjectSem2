@@ -1,11 +1,17 @@
 import domain.*;
-import org.junit.jupiter.api.Test;
+import util.Validation;
+
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Assertions;
 
 public class MainTest {
+    // Borrow Item Tests
     @Test
-    public void testBorrowItem() {
+    @DisplayName("Student borrows a book successfully")
+    void testBorrowItem() {
         Library library = new Library();
         Student student = new Student(1, "Alice");
         Book book = new Book(
@@ -20,19 +26,18 @@ public class MainTest {
         library.addUser(student);
         library.addItem(book);
 
-        // Actual
         library.borrowItem(student, book);
 
-        // Expected vs Actual
         String expected = "Borrowed";
         String actual = book.getStatus();
 
-        // Assert
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
+    // Return Item Tests
     @Test
-    public void testReturnItem() {
+    @DisplayName("Student returns a borrowed book successfully")
+    void testReturnItem() {
         Library library = new Library();
         Student student = new Student(1, "Alice");
         Book book = new Book(
@@ -44,21 +49,22 @@ public class MainTest {
                 "Fantasy"
         );
 
-        library.borrowItem(student, book);
+        library.addUser(student);
+        library.addItem(book);
 
-        // Actual
+        library.borrowItem(student, book);
         library.returnItem(student, book);
 
-        // Expected vs Actual
         String expected = "In store";
         String actual = book.getStatus();
 
-        // Assert
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
+    // Recursive Search Tests
     @Test
-    public void testRecursiveSearch() {
+    @DisplayName("Recursive search finds book by title")
+    void testRecursiveSearch() {
         Library library = new Library();
         Book book = new Book(
                 1,
@@ -71,19 +77,18 @@ public class MainTest {
 
         library.addItem(book);
 
-        // Actual
         Item result = library.recursiveSearch("Harry Potter", 0);
 
-        // Expected vs Actual
         String expected = "Harry Potter";
         String actual = result.getTitle();
 
-        // Assert
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
+    // Stream Search Tests
     @Test
-    public void testStreamSearch() {
+    @DisplayName("Stream search returns matching books")
+    void testStreamSearch() {
         Library library = new Library();
         Book book1 = new Book(
                 1,
@@ -96,9 +101,9 @@ public class MainTest {
 
         Book book2 = new Book(
                 2,
-                "Harry Potter",
+                "Harry Potter 2",
                 "In store",
-                "1234567890123",
+                "9876543210123",
                 "J.K Rowling",
                 "Fantasy"
         );
@@ -106,19 +111,18 @@ public class MainTest {
         library.addItem(book1);
         library.addItem(book2);
 
-        // Actual
         List<Item> results = library.streamSearch("Harry Potter");
 
-        // Expected vs Actual
-        int expected = 1;
+        int expected = 2;
         int actual = results.size();
 
-        // Assert
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
+    // Author Search Tests
     @Test
-    public void testSearchByAuthor() {
+    @DisplayName("Search books by author successfully")
+    void testSearchByAuthor() {
         Library library = new Library();
         Book book = new Book(
                 1,
@@ -131,19 +135,18 @@ public class MainTest {
 
         library.addItem(book);
 
-        // Actual
         List<Item> results = library.searchByAuthor("Robert Martin");
 
-        // Expected vs Actual
         int expected = 1;
         int actual = results.size();
 
-        // Assert
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
+    // Borrow Restriction Tests
     @Test
-    public void testStudentCannotBorrowDVD() {
+    @DisplayName("Student cannot borrow a DVD")
+    void testStudentCannotBorrowDVD() {
         Library library = new Library();
         Student student = new Student(1, "Alice");
         DVD dvd = new DVD(
@@ -155,20 +158,18 @@ public class MainTest {
         );
 
         library.addItem(dvd);
-
-        // Actual
         library.borrowItem(student, dvd);
 
-        // Expected vs Actual
         String expected = "In store";
         String actual = dvd.getStatus();
 
-        // Assert
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
+    // Sorting Tests
     @Test
-    public void testSortItemsByTitle() {
+    @DisplayName("Sort items alphabetically by title")
+    void testSortItemsByTitle() {
         Library library = new Library();
         Book book1 = new Book(
                 1,
@@ -191,24 +192,21 @@ public class MainTest {
         library.addItem(book1);
         library.addItem(book2);
 
-        // Actual
         library.sortItemsByTitle();
 
-        // Expected vs Actual
         String expected = "Apple Book";
         String actual = library.getItems().get(0).getTitle();
 
-        // Assert
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
+    // Validation Tests
     @Test
-    public void testISBNValidation() {
-        // Expected vs Actual
+    @DisplayName("Valid ISBN returns true")
+    void testISBNValidation() {
         boolean expected = true;
-        boolean actual = util.Validation.isValidISBN("1234567890123");
+        boolean actual = Validation.isValidISBN("1234567890123");
 
-        // Assert
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 }
