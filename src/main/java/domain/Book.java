@@ -5,6 +5,8 @@ import util.Validation;
 
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Book extends Item {
     private String isbn;
     private String author;

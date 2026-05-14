@@ -4,6 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class DVD extends Item {
     private String director;
     private int duration;

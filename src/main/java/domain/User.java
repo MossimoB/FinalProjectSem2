@@ -7,6 +7,9 @@ import java.util.List;
 
 @Getter
 @Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@ToString
 public abstract class User {
     protected String id;
     protected String name;

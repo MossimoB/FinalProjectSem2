@@ -4,6 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@EqualsAndHashCode
+@ToString
 public abstract class Item {
     protected String id;
     protected String title;

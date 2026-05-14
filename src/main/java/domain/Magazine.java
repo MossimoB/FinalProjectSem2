@@ -4,6 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString
 public class Magazine extends Item {
     private int issueNumber;
     private String publisher;
