@@ -3,6 +3,7 @@ package domain;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -25,4 +26,20 @@ public abstract class User {
     }
 
     public abstract int getBorrowLimit();
+
+    public abstract boolean canBorrow(Item item);
+
+    public static class IdComparator implements Comparator<User> {
+        @Override
+        public int compare(User o1, User o2) {
+            return o1.id.compareTo(o2.id);
+        }
+    }
+
+    public static class BorrowCountComparator implements Comparator<User> {
+        @Override
+        public int compare(User o1, User o2) {
+            return o2.borrowedItems.size() - o1.borrowedItems.size();
+        }
+    }
 }
