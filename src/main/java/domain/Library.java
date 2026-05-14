@@ -129,30 +129,57 @@ public class Library {
     }
 
     /**
-     * Loads books from a CSV file
-     * @param path file path
+     * Loads items from CSV
+     * @param path csv path
      */
-    public void loadBooksFromCSV(String path) {
+    public void loadItemsFromCSV(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
 
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                Book book = new Book(
-                        Integer.parseInt(parts[0]),
-                        parts[1],
-                        parts[2],
-                        parts[3],
-                        parts[4],
-                        parts[5]
-                );
+                String type = parts[0];
 
-                items.add(book);
+                switch (type.toUpperCase()) {
+                    case "BOOK":
+                        Book book = new Book(
+                                Integer.parseInt(parts[1]),
+                                parts[2],
+                                parts[3],
+                                parts[4],
+                                parts[5],
+                                parts[6]
+                        );
+                        addItem(book);
+                        break;
+
+                    case "DVD":
+                        DVD dvd = new DVD(
+                                Integer.parseInt(parts[1]),
+                                parts[2],
+                                parts[3],
+                                parts[4],
+                                Integer.parseInt(parts[5])
+                        );
+                        addItem(dvd);
+                        break;
+
+                    case "MAGAZINE":
+                        Magazine magazine = new Magazine(
+                                Integer.parseInt(parts[1]),
+                                parts[2],
+                                parts[3],
+                                Integer.parseInt(parts[4]),
+                                parts[5]
+                        );
+                        addItem(magazine);
+                        break;
+                }
             }
-            System.out.println("Books loaded successfully");
+            System.out.println("Items loaded successfully");
 
         } catch (Exception e) {
-            System.out.println("Error loading books: " + e.getMessage());
+            System.out.println("Error loading items: " + e.getMessage());
         }
     }
 
