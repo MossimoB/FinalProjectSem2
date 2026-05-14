@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 public class Library {
     private List<Item> items;
     private List<User> users;
+    private Stack<Item> returnedItemsStack = new Stack<>();
+    private Queue<User> borrowingQueue = new LinkedList<>();
+    private Map<String, Item> itemMap = new HashMap<String, Item>();
 
     public Library() {
         items = new ArrayList<>();
@@ -18,10 +21,7 @@ public class Library {
 
     public void addItem(Item item) {
         items.add(item);
-    }
-
-    public void addUser(User user) {
-        users.add(user);
+        itemMap.put(item.getId(), item);
     }
 
     /**
@@ -30,8 +30,12 @@ public class Library {
      * @param item the item being borrowed
      */
     public void borrowItem(User user, Item item) {
-
         try {
+            // makes sure can only borrow books
+            if (user instanceof Student && !(item instanceof Book)) {
+                throw new Exception("Students can only borrow books");
+            }
+
             if (item.getStatus().equalsIgnoreCase("Borrowed")) {
                 throw new Exception("Item already borrowed");
             }
@@ -57,6 +61,8 @@ public class Library {
     public void returnItem(User user, Item item) {
         item.setStatus("In store");
         user.getBorrowedItems().remove(item);
+
+        returnedItemsStack.push(item);
     }
 
     /**
@@ -83,8 +89,11 @@ public class Library {
      * @return list of matching items
      */
     public List<Item> streamSearch(String title) {
+        Set<String> titlesSeen = new HashSet<>();
+
         return items.stream()
                 .filter(i -> i.getTitle().equalsIgnoreCase(title))
+                .filter(i -> titlesSeen.add(i.getTitle().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
@@ -94,10 +103,14 @@ public class Library {
      * @return list of matching books
      */
     public List<Item> searchByAuthor(String author) {
+        Set<String> titlesSeen = new HashSet<>();
+
         return items.stream()
                 .filter(i -> i instanceof Book)
-                .filter(i -> ((Book) i).getAuthor()
+                .filter(i -> ((Book) i)
+                        .getAuthor()
                         .equalsIgnoreCase(author))
+                .filter(i -> titlesSeen.add(i.getTitle().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
@@ -235,6 +248,17 @@ public class Library {
 
         } catch (Exception e) {
             System.out.println("Error saving users: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Prints any type of list using generics
+     * @param list the list to print
+     * @param <T> generic type
+     */
+    public <T> void printList(List<T> list) {
+        for (T item : list) {
+            System.out.println(item);
         }
     }
 }
