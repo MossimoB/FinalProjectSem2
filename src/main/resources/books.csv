@@ -1,2 +1,5 @@
-1,Harry Potter,in store,1234567890123,J.K. Rowling,Fantasy
-2,Java Basics,in store,1111111111111,John Smith,Education
+BOOK,1,Harry Potter,In store,1234567890123,J.K. Rowling,Fantasy
+BOOK,2,Harry Potter,In store,1234567890123,J.K. Rowling,Fantasy
+BOOK,3,Clean Code,Lost,2222222222222,Robert Martin,Programming
+DVD,4,Interstellar,In store,Christopher Nolan,169
+MAGAZINE,5,Tech Monthly,In store,12,Future Media
