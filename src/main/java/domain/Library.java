@@ -1,9 +1,9 @@
 package domain;
 
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -25,12 +25,12 @@ public class Library {
     }
 
     /**
-     * Allows a user to borrow an item from the library.
-     * Checks whether the item is already borrowed and whether the user has reached their borrowing limit.
+     * Allows a user to borrow an item
      * @param user the user borrowing the item
-     * @param item the item to be borrowed
+     * @param item the item being borrowed
      */
     public void borrowItem(User user, Item item) {
+
         try {
             if (item.getStatus().equalsIgnoreCase("Borrowed")) {
                 throw new Exception("Item already borrowed");
@@ -50,7 +50,7 @@ public class Library {
     }
 
     /**
-     * Returns an item back to the library and removes it from the user's borrowed items list.
+     * Returns an item back to the library
      * @param user the user returning the item
      * @param item the item being returned
      */
@@ -60,34 +60,181 @@ public class Library {
     }
 
     /**
-     * Recursively searches for an item by title.
-     * @param title the title of the item to search for
-     * @param index the current index used during recursion
-     * @return the matching item if found, otherwise null
+     * Recursively searches for an item by title
+     * @param title the title to search for
+     * @param index current recursive index
+     * @return matching item or null
      */
     public Item recursiveSearch(String title, int index) {
         if (index >= items.size()) {
             return null;
         }
-
         Item item = items.get(index);
 
         if (item.getTitle().equalsIgnoreCase(title)) {
             return item;
         }
-
         return recursiveSearch(title, index + 1);
     }
 
     /**
-     * Searches for items by title using Java Streams.
-     * @param title the title of the item to search for
-     * @return a list of matching items
+     * Searches for items by title using streams
+     * @param title the title to search for
+     * @return list of matching items
      */
     public List<Item> streamSearch(String title) {
         return items.stream()
-                .filter(i -> i.getTitle()
-                .equalsIgnoreCase(title))
-                .toList();
+                .filter(i -> i.getTitle().equalsIgnoreCase(title))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Searches books by author using streams
+     * @param author author name
+     * @return list of matching books
+     */
+    public List<Item> searchByAuthor(String author) {
+        return items.stream()
+                .filter(i -> i instanceof Book)
+                .filter(i -> ((Book) i).getAuthor()
+                        .equalsIgnoreCase(author))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Sorts items alphabetically by title.
+     */
+    public void sortItemsByTitle() {
+        items.sort(Comparator.comparing(Item::getTitle));
+    }
+
+    /**
+     * Sorts users alphabetically by name.
+     */
+    public void sortUsersByName() {
+        users.sort(Comparator.comparing(User::getName));
+    }
+
+    /**
+     * Loads books from a CSV file
+     * @param path file path
+     */
+    public void loadBooksFromCSV(String path) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                Book book = new Book(
+                        Integer.parseInt(parts[0]),
+                        parts[1],
+                        parts[2],
+                        parts[3],
+                        parts[4],
+                        parts[5]
+                );
+
+                items.add(book);
+            }
+            System.out.println("Books loaded successfully");
+
+        } catch (Exception e) {
+            System.out.println("Error loading books: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Loads users from a CSV file
+     * @param path file path
+     */
+    public void loadUsersFromCSV(String path) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+
+                int id = Integer.parseInt(parts[0]);
+                String name = parts[1];
+                String type = parts[2];
+
+                switch (type.toLowerCase()) {
+
+                    case "student":
+                        users.add(new Student(id, name));
+                        break;
+
+                    case "teacher":
+                        users.add(new Teacher(id, name));
+                        break;
+
+                    case "admin":
+                        users.add(new Admin(id, name));
+                        break;
+                }
+            }
+            System.out.println("Users loaded successfully");
+
+        } catch (Exception e) {
+            System.out.println("Error loading users: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Saves books into a CSV file
+     * @param path file path
+     */
+    public void saveBooksToCSV(String path) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for (Item item : items) {
+                if (item instanceof Book) {
+                    Book book = (Book) item;
+                    bw.write(
+                            book.getId() + "," +
+                                    book.getTitle() + "," +
+                                    book.getStatus() + "," +
+                                    book.getIsbn() + "," +
+                                    book.getAuthor() + "," +
+                                    book.getGenre()
+                    );
+                    bw.newLine();
+                }
+            }
+            System.out.println("Books saved successfully");
+
+        } catch (Exception e) {
+            System.out.println("Error saving books: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Saves users into a CSV file
+     * @param path file path
+     */
+    public void saveUsersToCSV(String path) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for (User user : users) {
+                String type = "";
+
+                if (user instanceof Student) {
+                    type = "student";
+                } else if (user instanceof Teacher) {
+                    type = "teacher";
+                } else if (user instanceof Admin) {
+                    type = "admin";
+                }
+
+                bw.write(
+                        user.getId() + "," +
+                                user.getName() + "," +
+                                type
+                );
+                bw.newLine();
+            }
+            System.out.println("Users saved successfully");
+
+        } catch (Exception e) {
+            System.out.println("Error saving users: " + e.getMessage());
+        }
     }
 }
