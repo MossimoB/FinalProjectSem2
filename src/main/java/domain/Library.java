@@ -24,6 +24,12 @@ public class Library {
         users.add(user);
     }
 
+    /**
+     * Allows a user to borrow an item from the library.
+     * Checks whether the item is already borrowed and whether the user has reached their borrowing limit.
+     * @param user the user borrowing the item
+     * @param item the item to be borrowed
+     */
     public void borrowItem(User user, Item item) {
         try {
             if (item.getStatus().equalsIgnoreCase("Borrowed")) {
@@ -43,11 +49,22 @@ public class Library {
         }
     }
 
+    /**
+     * Returns an item back to the library and removes it from the user's borrowed items list.
+     * @param user the user returning the item
+     * @param item the item being returned
+     */
     public void returnItem(User user, Item item) {
         item.setStatus("In store");
         user.getBorrowedItems().remove(item);
     }
 
+    /**
+     * Recursively searches for an item by title.
+     * @param title the title of the item to search for
+     * @param index the current index used during recursion
+     * @return the matching item if found, otherwise null
+     */
     public Item recursiveSearch(String title, int index) {
         if (index >= items.size()) {
             return null;
@@ -62,6 +79,11 @@ public class Library {
         return recursiveSearch(title, index + 1);
     }
 
+    /**
+     * Searches for items by title using Java Streams.
+     * @param title the title of the item to search for
+     * @return a list of matching items
+     */
     public List<Item> streamSearch(String title) {
         return items.stream()
                 .filter(i -> i.getTitle()
