@@ -24,6 +24,10 @@ public class Library {
         itemMap.put(item.getId(), item);
     }
 
+    public void addUser(User user) {
+        users.add(user);
+    }
+
     /**
      * Allows a user to borrow an item
      * @param user the user borrowing the item

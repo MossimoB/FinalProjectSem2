@@ -191,7 +191,7 @@ public class MainTest {
         library.addItem(book1);
         library.addItem(book2);
 
-        // Actua
+        // Actual
         library.sortItemsByTitle();
 
         // Expected vs Actual
